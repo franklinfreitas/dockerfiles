@@ -1,0 +1,18 @@
+#!/bin/bash
+
+docker run -ti --rm \
+           -e DISPLAY=$DISPLAY \
+           -v /tmp/.X11-unix:/tmp/.X11-unix \
+           -v `pwd`:/workspace \
+           fgrehm/netbeans:v8.0.1
+           
+           
+#docker run -ti --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix netbeans
+
+# Windows
+set-variable -name DISPLAY -value <host_IP_address>:0
+docker run -it --rm -e DISPLAY=$DISPLAY -v C:/Users/oci-ais/NetBeansProjects:/home/developer/NetBeansProjects -v C:/Users/oci-ais/netbeans_userdir:/home/developer/.netbeans  -v C:/Users/oci-ais/netbeans_cachedir:/home/developer/.cache netbeans
+
+# Linux
+sudo xhost local:root
+docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp/.X11-unix  netbeans

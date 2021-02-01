@@ -1,0 +1,17 @@
+version: '3.2'
+
+services:
+  firefox:
+    build:
+      context: .
+      dockerfile: Debian-Firefox.dockerfile
+    image: my-firefox
+    container_name: firefox
+    environment:
+      - DISPLAY=unix$DISPLAY
+      - GDK_SCALE
+      - GDK_DPI_SCALE
+    volumes:
+      - type: bind
+        source: /tmp/.X11-unix/
+        target: /tmp/.X11-unix

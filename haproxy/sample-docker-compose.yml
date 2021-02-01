@@ -1,0 +1,41 @@
+version: '3.2'
+
+services:
+  web1:
+    image: dockercloud/hello-world
+    container_name: web1
+    ports:
+      - "81:80"
+    networks: 
+      - test-network
+
+  web2:
+    image: dockercloud/hello-world
+    container_name: web2
+    ports:
+      - "82:80"
+    networks: 
+      - test-network
+
+  haproxy:
+    image: my-haproxy
+    container_name: load-balancer
+    ports:
+        - "8080:80"
+        - "1936:1936"
+    networks: 
+      - test-network
+    volumes:
+      - type: bind
+        source: ./haproxy-sample.cfg
+        target: /usr/local/etc/haproxy/haproxy.cfg
+    deploy:
+      replicas: 4
+      update_config:
+        parallelism: 1
+        delay: 20s
+      restart_policy:
+        condition: on-failure
+
+networks:
+  test-network:
